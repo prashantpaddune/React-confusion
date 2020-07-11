@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import {Card, CardImg, CardTitle, CardBody, CardText, ListGroup, ListGroupItem} from 'reactstrap';
+import {Card, CardImg, CardTitle, CardBody, CardText, ListGroupItem} from 'reactstrap';
 
 class Details extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
-    renderDish(dish) {
+    renderDish = (dish) => {
         if (dish != null)
             return (
                 <Card>
@@ -19,26 +15,28 @@ class Details extends Component {
                 </Card>
             );
         else
-            return (
-                <div></div>
-            );
+            return <div></div>
+
     }
 
-    renderComments(dish) {
+    renderComments = (dish) => {
         if (dish != null) {
             const comments = dish.comments.map(comment => {
                 return (
-                    <ListGroupItem key={comment.id}>
+                    <p key={comment.id}>
                         {comment.comment} <br />
-                        -- {comment.author}, {comment.date}
-                    </ListGroupItem>
+                        -- {comment.author}, {new Intl.DateTimeFormat('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
+                    </p>
                 )
             })
             return (
-                <ListGroup>
+                <div>
                     <h4>Comments</h4>
                     {comments}
-                </ListGroup>
+                </div>
             );
         } else
             return <div></div>
@@ -47,12 +45,14 @@ class Details extends Component {
 
     render() {
         return(
-            <div className="row">
-                <div className="col-12 col-md-5 m-1">
-                    {this.renderDish(this.props.selectedDish)}
-                </div>
-                <div className="col-12 col-md-5 m-1">
-                    {this.renderComments(this.props.selectedDish)}
+            <div className="container">
+                <div className="row">
+                    <div className="col-12 col-md-5 m-1">
+                        {this.renderDish(this.props.dish)}
+                    </div>
+                    <div className="col-12 col-md-5 m-1">
+                        {this.renderComments(this.props.dish)}
+                    </div>
                 </div>
             </div>
         );
