@@ -15,7 +15,6 @@ const RenderCard = ({item}) => {
 }
 
 const Home = (props) => {
-    console.log(props.leader)
     return(
         <div className="container">
             <div className="row align-items-start">
