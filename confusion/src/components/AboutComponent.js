@@ -3,6 +3,7 @@ import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'r
 import { Link } from 'react-router-dom';
 import {baseUrl} from "../shared/baseUrl";
 import {Loading} from "./LoadingComponent";
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 const Renderleader = ({leader, isLoading, errMess}) => {
     if (isLoading) {
@@ -17,22 +18,26 @@ const Renderleader = ({leader, isLoading, errMess}) => {
     } else {
         return (
             <div>
+                <Stagger in>
                 {leader.map((leader) => {
                     return (
-                        <div key={leader.id} className="col-12 mt-5">
-                            <Media tag="li">
-                                <Media left middle>
-                                    <Media object src={baseUrl + leader.image} alt={leader.name}/>
+                        <Fade in>
+                            <div key={leader.id} className="col-12 mt-5">
+                                <Media tag="li">
+                                    <Media left middle>
+                                        <Media object src={baseUrl + leader.image} alt={leader.name}/>
+                                    </Media>
+                                    <Media body className="ml-5">
+                                        <Media heading style={{fontSize: '30px'}}>{leader.name}</Media>
+                                        <Media heading style={{fontSize: '20px'}}>{leader.designation}</Media>
+                                        <p>{leader.description}</p>
+                                    </Media>
                                 </Media>
-                                <Media body className="ml-5">
-                                    <Media heading style={{fontSize: '30px'}}>{leader.name}</Media>
-                                    <Media heading style={{fontSize: '20px'}}>{leader.designation}</Media>
-                                    <p>{leader.description}</p>
-                                </Media>
-                            </Media>
-                        </div>
+                            </div>
+                        </Fade>
                     )
                 })}
+                </Stagger>
             </div>
         )
     }
